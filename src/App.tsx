@@ -1,0 +1,86 @@
+import { useEffect, useRef, useState } from "react";
+import Intro from "./components/Intro";
+import Nav from "./components/Nav";
+import Hero from "./components/Hero";
+import { Ticker, Features, Premium, About } from "./components/Sections";
+import { Commands, Cta, Footer } from "./components/Tail";
+import { useRevealObserver } from "./lib/hooks";
+
+const TICKER_A = [
+  "cross-server calls",
+  "full moderation",
+  "giveaways built in",
+  "audit log lookup",
+  "custom prefixes",
+  "24/7 uptime",
+];
+
+const TICKER_B = [
+  "made for servers",
+  "not dashboards",
+  "no signal lost",
+  "est. panchiko",
+  "in-chat first",
+  "zero setup",
+];
+
+export default function App() {
+  const [ready, setReady] = useState(false);
+  const progressRef = useRef<HTMLDivElement | null>(null);
+
+  useRevealObserver(ready);
+
+  useEffect(() => {
+    let raf = 0;
+    const onScroll = () => {
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => {
+        const max = document.documentElement.scrollHeight - window.innerHeight;
+        const p = max > 0 ? Math.min(window.scrollY / max, 1) : 0;
+        if (progressRef.current) progressRef.current.style.transform = `scaleX(${p})`;
+      });
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      cancelAnimationFrame(raf);
+    };
+  }, []);
+
+  return (
+    <>
+      <Intro onDone={() => setReady(true)} />
+      <div className="scanlines" aria-hidden="true" />
+      <div className="scroll-progress" ref={progressRef} aria-hidden="true" />
+      <div className="rail-label" aria-hidden="true">
+        <span className="chevron-label">
+          <b>M</b>
+          <i>&gt;</i>
+          <b>O</b>
+          <i>&gt;</i>
+          <b>C</b>
+          <i>&gt;</i>
+          <b>H</b>
+          <i>&gt;</i>
+          <b>A</b>
+        </span>
+      </div>
+
+      <Nav />
+
+      <main>
+        <Hero ready={ready} />
+        <Ticker items={TICKER_A} />
+        <Features />
+        <Premium />
+        <About />
+        <Commands />
+        <Ticker items={TICKER_B} red />
+        <Cta />
+      </main>
+
+      <Footer />
+    </>
+  );
+}
