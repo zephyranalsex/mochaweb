@@ -12,7 +12,23 @@ const pngAssets = import.meta.glob("./Mocha-*.png", {
 
 const resolveAsset = (name: string) => pngAssets[`./${name}.png`] ?? sourceImage;
 
-export const mochaBackground = resolveAsset("Mocha-Background");
 export const mochaGlobe = resolveAsset("Mocha-Globe");
 export const mochaPaperclip = resolveAsset("Mocha-Paperclip");
 export const mochaFace = resolveAsset("Mocha-Face");
+
+const BACKGROUND_RE = /^\.\/Mocha-Background(\d*)\.png$/;
+
+const backgroundVariants = Object.keys(pngAssets)
+  .filter((key) => BACKGROUND_RE.test(key))
+  .sort((a, b) => {
+    const na = Number(a.match(BACKGROUND_RE)![1] || 0);
+    const nb = Number(b.match(BACKGROUND_RE)![1] || 0);
+    return na - nb;
+  })
+  .map((key) => pngAssets[key]);
+
+export function pickMochaBackground(): string {
+  if (backgroundVariants.length === 0) return sourceImage;
+  const i = Math.floor(Math.random() * backgroundVariants.length);
+  return backgroundVariants[i];
+}
