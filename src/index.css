@@ -212,11 +212,76 @@ body.intro-lock{ overflow: hidden; height: 100vh; }
 .mocha-link.is-active svg{ color: var(--red-2); }
 .mocha-nav-right{ display: flex; align-items: center; gap: 8px; }
 .login-link, .discord-link{ display: inline-flex; align-items: center; justify-content: center; height: 34px; border-radius: 999px; border: 1px solid var(--line-strong); background: var(--paper); transition: transform .2s ease, background .2s ease, color .2s ease, border-color .2s ease; }
-.login-link{ padding: 0 15px; font-size: .71rem; }
+.login-link{ padding: 0 15px; gap: 7px; font-size: .71rem; position: relative; }
+.login-arrow{ display: none; width: 13px; height: 13px; flex: 0 0 auto; transition: transform .25s var(--ease-spring); }
+.login-link:hover .login-arrow{ transform: translate(2px,-2px); }
 .discord-link{ width: 36px; background: var(--red); border-color: var(--red); color: #fff; }
 .discord-link svg{ width: 17px; height: 17px; fill: currentColor; }
 .login-link:hover, .discord-link:hover{ transform: translateY(-2px); }
 .discord-link:hover{ background: var(--blue); border-color: var(--blue); }
+
+/* -- profile menu (logged in) -- */
+
+.profile-menu{ position: relative; }
+.profile-trigger{
+  display: inline-flex; align-items: center; gap: 8px;
+  height: 34px; padding: 0 14px 0 6px;
+  border-radius: 999px; border: 1px solid var(--line-strong);
+  background: var(--paper); color: var(--cream);
+  font: inherit; font-size: .71rem; cursor: pointer;
+  transition: transform .2s ease, background .2s ease, border-color .2s ease;
+}
+.profile-trigger:hover{ transform: translateY(-2px); background: rgba(244,239,228,.09); }
+.profile-trigger.is-open{ background: rgba(244,239,228,.1); border-color: var(--line-strong); }
+.profile-avatar{
+  width: 24px; height: 24px; border-radius: 50%; object-fit: cover; flex: 0 0 auto;
+  border: 1px solid var(--line-strong); background: #0a0a09;
+  transition: transform .3s var(--ease-spring);
+}
+.profile-trigger:hover .profile-avatar{ transform: rotate(-6deg) scale(1.08); }
+.profile-name{
+  max-width: 130px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  transition: opacity .2s ease;
+}
+
+.profile-dropdown{
+  position: absolute; top: calc(100% + 10px); right: 0;
+  min-width: 178px; padding: 7px;
+  border-radius: 14px; border: 1px solid var(--line-strong);
+  background: rgba(20,18,15,.92);
+  backdrop-filter: blur(18px) saturate(1.1); -webkit-backdrop-filter: blur(18px) saturate(1.1);
+  box-shadow: 0 20px 44px var(--shadow), 0 1px 0 rgba(255,255,255,.04) inset;
+  opacity: 0; transform: translateY(-6px) scale(.96); transform-origin: top right;
+  pointer-events: none; z-index: 60;
+  transition: opacity .16s var(--ease-out), transform .22s var(--ease-spring);
+}
+.profile-dropdown.is-open{ opacity: 1; transform: translateY(0) scale(1); pointer-events: auto; }
+.profile-dropdown-item{
+  display: flex; align-items: center; gap: 10px; width: 100%;
+  padding: 9px 12px; border-radius: 8px;
+  font-family: var(--font-body); font-size: .78rem; color: var(--mid);
+  background: transparent; border: 0; text-align: left; cursor: pointer;
+  transition: background .16s ease, color .16s ease, padding-left .2s var(--ease-out);
+}
+.profile-dropdown-item svg{
+  width: 15px; height: 15px; flex: 0 0 auto; stroke: currentColor; color: var(--mid-2);
+  transition: color .16s ease, transform .25s var(--ease-spring);
+}
+.profile-dropdown-item:hover, .profile-dropdown-item:focus-visible{
+  background: var(--paper); color: var(--cream); padding-left: 15px;
+}
+.profile-dropdown-item:hover svg, .profile-dropdown-item:focus-visible svg{
+  color: var(--red-2); transform: rotate(-8deg) scale(1.08);
+}
+.profile-dropdown-divider{ display: block; height: 1px; margin: 7px 6px; background: var(--line); }
+.profile-dropdown-logout{ color: var(--red-2); }
+.profile-dropdown-logout svg{ color: var(--red-2); opacity: .8; }
+.profile-dropdown-logout:hover, .profile-dropdown-logout:focus-visible{
+  background: rgba(193,39,45,.12); color: var(--red-2);
+}
+.profile-dropdown-logout:hover svg, .profile-dropdown-logout:focus-visible svg{
+  color: var(--red-2); opacity: 1;
+}
 
 .mocha-nav.compact{ width: min(580px, calc(100vw - 40px)); padding: 7px 8px 7px 10px; gap: 10px; }
 .mocha-nav.compact .mocha-brand{ min-width: auto; }
@@ -224,9 +289,13 @@ body.intro-lock{ overflow: hidden; height: 100vh; }
 .mocha-nav.compact .mocha-brand-text{ font-size: .76rem; }
 .mocha-nav.compact .mocha-link{ width: 32px; height: 32px; padding: 0; justify-content: center; gap: 0; border: 1px solid var(--line); border-radius: 50%; }
 .mocha-nav.compact .mocha-link span{ display: none; }
-.mocha-nav.compact .login-link{ width: 34px; padding: 0; font-size: 0; position: relative; }
-.mocha-nav.compact .login-link::before{ content:""; width: 12px; height: 12px; border: 1.4px solid currentColor; border-radius: 50%; transform: translateY(-3px); }
-.mocha-nav.compact .login-link::after{ content:""; position: absolute; width: 13px; height: 6px; border: 1.4px solid currentColor; border-bottom: 0; border-radius: 9px 9px 0 0; transform: translateY(6px); }
+.mocha-nav.compact .login-link{ width: 34px; padding: 0; gap: 0; }
+.mocha-nav.compact .login-text{ display: none; }
+.mocha-nav.compact .login-arrow{ display: block; }
+.mocha-nav.compact .profile-trigger{ width: 36px; height: 36px; padding: 0; justify-content: center; gap: 0; }
+.mocha-nav.compact .profile-avatar{ width: 30px; height: 30px; }
+.mocha-nav.compact .profile-name{ display: none; }
+.mocha-nav.compact .profile-dropdown{ top: calc(100% + 12px); }
 
 @media (max-width: 760px){
   .mocha-links{ display: none; }
