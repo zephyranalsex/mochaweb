@@ -45,6 +45,7 @@ const LINKS = [
 export default function Nav() {
   const [compact, setCompact] = useState(false);
   const [active, setActive] = useState("");
+  const [user, setUser] = useState<{ username: string; avatar_url: string } | null>(null);
   const lineRef = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
@@ -84,6 +85,13 @@ export default function Nav() {
     return () => io.disconnect();
   }, []);
 
+  useEffect(() => {
+    fetch("/auth/session", { credentials: "include" })
+      .then((r) => r.json())
+      .then((d) => setUser(d.authenticated ? d.user : null))
+      .catch(() => setUser(null));
+  }, []);
+
   return (
     <nav className={`mocha-nav${compact ? " compact" : ""}`} id="mochaNav" aria-label="Primary navigation">
       <a className="mocha-brand" href="#top" aria-label="Mocha home">
@@ -99,9 +107,15 @@ export default function Nav() {
         ))}
       </div>
       <div className="mocha-nav-right">
-        <a className="login-link" href="https://discord.com/oauth2/authorize?client_id=1544448518310199427&response_type=code&redirect_uri=https%3A%2F%2Fskeleton-barmaid-throat.ngrok-free.dev%2Fauth%2Fdiscord%2Fcallback&scope=identify+guilds+email+guilds.join+guilds.members.read" target="_self" rel="noreferrer" aria-label="Login with Discord">
-          Login
-        </a>
+        {user ? (
+          <span className="login-link" aria-label={`Logged in as ${user.username}`}>
+            {user.username}
+          </span>
+        ) : (
+          <a className="login-link" href="/auth/discord/login" aria-label="Login with Discord">
+            Login
+          </a>
+        )}
         <a className="discord-link" href="https://discord.com/oauth2/authorize?client_id=1544448518310199427&permissions=8&integration_type=0&scope=bot" target="_blank" rel="noreferrer" aria-label="Invite Mocha to Discord">
           <svg viewBox="0 0 24 24" aria-hidden="true">
             <path d="M19.54 5.33A16.9 16.9 0 0 0 15.43 4l-.5 1.03a14.2 14.2 0 0 0-5.86 0L8.57 4a16.8 16.8 0 0 0-4.1 1.33C1.88 9.36 1.17 13.3 1.52 17.19a16.98 16.98 0 0 0 5.05 2.58l1.09-1.48c-.6-.22-1.17-.49-1.71-.8l.41-.31c3.29 1.55 7.06 1.55 10.31 0l.42.31c-.54.31-1.11.58-1.71.8l1.09 1.48a16.9 16.9 0 0 0 5.05-2.58c.41-4.51-.69-8.41-2.98-11.86ZM8.5 15.56c-.98 0-1.79-.89-1.79-1.98s.79-1.98 1.79-1.98 1.8.89 1.79 1.98c0 1.09-.79 1.98-1.79 1.98Zm7 0c-.98 0-1.79-.89-1.79-1.98s.79-1.98 1.79-1.98 1.8.89 1.79 1.98c0 1.09-.79 1.98-1.79 1.98Z" />
