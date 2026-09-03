@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState, type CSSProperties } from "react";
-import { mochaBackground, mochaGlobe, mochaPaperclip } from "../assets/mochaAssets";
+import { pickMochaBackground, mochaGlobe, mochaPaperclip } from "../assets/mochaAssets";
 import HeroScene, { type SceneState } from "./HeroScene";
 import { useCountOnView, useMagnetic, usePrefersReducedMotion, useScramble, useMediaQuery } from "../lib/hooks";
 
@@ -22,6 +22,7 @@ export default function Hero({ ready }: { ready: boolean }) {
   const flashRef = useRef<HTMLDivElement | null>(null);
   const hudRef = useRef<HTMLSpanElement | null>(null);
 
+  const [mochaBackground] = useState(() => pickMochaBackground());
   const [copies, setCopies] = useState(0);
   const stateRef = useRef<SceneState>({ scroll: 0, px: 0, py: 0 });
 
