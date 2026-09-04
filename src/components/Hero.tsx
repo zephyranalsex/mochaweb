@@ -39,6 +39,21 @@ export default function Hero({ ready }: { ready: boolean }) {
 
   const inviteRef = useMagnetic<HTMLAnchorElement>(0.22);
 
+type MochaUser = {
+  username: string;
+  global_name?: string | null;
+};
+
+const [user, setUser] = useState<MochaUser | null>(null);
+
+useEffect(() => {
+  fetch("/auth/session", { credentials: "include" })
+    .then((r) => r.json())
+    .then((d) => setUser(d.authenticated ? d.user : null))
+    .catch(() => setUser(null));
+}, []);
+
+const displayName = (user?.global_name || user?.username || "").toUpperCase();
   /* scroll choreography */
   useEffect(() => {
     let raf = 0;
@@ -157,9 +172,17 @@ export default function Hero({ ready }: { ready: boolean }) {
 
       <div className="hero-secret" aria-hidden="true">
         <span className="secret-item secret-death">
-          HELLOW
-          <br />
-          TWIN
+          {user ? (<>
+            SUPP
+            <br />
+            {displayName}
+          </>
+          ) : (<> 
+        HELLO
+        <br />
+        TWIN
+        </>
+        )}
         </span>
         <span className="secret-item secret-note-1">no signal lost</span>
         <span className="secret-item secret-note-2">copy me</span>
