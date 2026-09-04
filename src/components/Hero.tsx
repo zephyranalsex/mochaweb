@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef, useState, type CSSProperties } from "re
 import { pickMochaBackground, mochaGlobe, mochaPaperclip } from "../assets/mochaAssets";
 import HeroScene, { type SceneState } from "./HeroScene";
 import { useCountOnView, useMagnetic, usePrefersReducedMotion, useScramble, useMediaQuery } from "../lib/hooks";
+import { useMochaSession } from "../lib/session";
 
 const d = (s: string) => ({ "--d": s }) as CSSProperties;
 
@@ -39,21 +40,9 @@ export default function Hero({ ready }: { ready: boolean }) {
 
   const inviteRef = useMagnetic<HTMLAnchorElement>(0.22);
 
-type MochaUser = {
-  username: string;
-  global_name?: string | null;
-};
-
-const [user, setUser] = useState<MochaUser | null>(null);
-
-useEffect(() => {
-  fetch("/auth/session", { credentials: "include" })
-    .then((r) => r.json())
-    .then((d) => setUser(d.authenticated ? d.user : null))
-    .catch(() => setUser(null));
-}, []);
-
-const displayName = (user?.global_name || user?.username || "").toUpperCase();
+  /* Shared Discord session (see lib/session.ts) -- same source of truth as the nav. */
+  const { user, displayName: sessionName } = useMochaSession();
+  const displayName = sessionName.toUpperCase();
   /* scroll choreography */
   useEffect(() => {
     let raf = 0;

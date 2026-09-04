@@ -216,3 +216,12 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# --- node / frontend ---
+node_modules/
+*.local
+.vite/
+# keep the frontend lib folder tracked (the python "lib/" rule above would
+# otherwise ignore every new file inside src/lib/)
+!src/lib/
+!src/lib/**

@@ -1,4 +1,4 @@
-import sourceImage from "./mocha-photo.jpg";
+import sourceImage from "./Mocha-photo.jpg";
 
 /*
  * The final PNGs are optional during development. Vite discovers them when
