@@ -485,11 +485,11 @@ export function Footer() {
         <div>
           <div className="footer-col-title">Product</div>
 
-          <a className="footer-link" href="#commands">
+          <a className="footer-link" href="/commands">
             Commands
           </a>
 
-          <a className="footer-link" href="#premium">
+          <a className="footer-link" href="/premium">
             Premium
           </a>
 
@@ -501,15 +501,15 @@ export function Footer() {
         <div>
           <div className="footer-col-title">Documentation</div>
 
-          <a className="footer-link" href="#documentation">
+          <a className="footer-link" href="/docs/getting-started">
             Getting started
           </a>
 
-          <a className="footer-link" href="#documentation">
+          <a className="footer-link" href="/docs/moderation">
             Moderation
           </a>
 
-          <a className="footer-link" href="#commands">
+          <a className="footer-link" href="/docs/commands-reference">
             Command reference
           </a>
         </div>
@@ -519,19 +519,14 @@ export function Footer() {
 
           <a
             className="footer-link"
-            href="https://discord.com/invite/mocha"
+            href="https://discord.gg/HK4Cg3hw59"
             target="_blank"
             rel="noreferrer"
           >
             Discord
           </a>
 
-          <a
-            className="footer-link"
-            href="https://discord.com/invite/mocha"
-            target="_blank"
-            rel="noreferrer"
-          >
+          <a className="footer-link" href="/help">
             Get help
           </a>
         </div>
@@ -539,30 +534,15 @@ export function Footer() {
         <div>
           <div className="footer-col-title">Legal</div>
 
-          <a
-            className="footer-link"
-            href="https://discord.com/invite/mocha"
-            target="_blank"
-            rel="noreferrer"
-          >
+          <a className="footer-link" href="/terms">
             Terms of Service
           </a>
 
-          <a
-            className="footer-link"
-            href="https://discord.com/invite/mocha"
-            target="_blank"
-            rel="noreferrer"
-          >
+          <a className="footer-link" href="/privacy">
             Privacy Policy
           </a>
 
-          <a
-            className="footer-link"
-            href="https://discord.com/invite/mocha"
-            target="_blank"
-            rel="noreferrer"
-          >
+          <a className="footer-link" href="/refunds">
             Refunds
           </a>
         </div>
@@ -582,27 +562,15 @@ export function Footer() {
         </a>
 
         <div className="footer-legal">
-          <a
-            href="https://discord.com/invite/mocha"
-            target="_blank"
-            rel="noreferrer"
-          >
+          <a href="/terms">
             Terms
           </a>{" "}
           &nbsp;&middot;&nbsp;
-          <a
-            href="https://discord.com/invite/mocha"
-            target="_blank"
-            rel="noreferrer"
-          >
+          <a href="/privacy">
             Privacy
           </a>{" "}
           &nbsp;&middot;&nbsp;
-          <a
-            href="https://discord.com/invite/mocha"
-            target="_blank"
-            rel="noreferrer"
-          >
+          <a href="/refunds">
             Refunds
           </a>
         </div>
