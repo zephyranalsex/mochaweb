@@ -3,7 +3,7 @@ import { PageShell } from "../PageShell";
 import { Icon } from "../../components/ui/Icon";
 import { ArrowLink, Reveal } from "../../components/ui/primitives";
 import { DISCORD_URL, DOCS_NAV, currentPath } from "../../lib/site";
-import { CATEGORIES, DISCORD_COMMANDS, TERMINAL_COMMANDS } from "../../data/commands";
+import { CATEGORIES, DISCORD_COMMANDS } from "../../data/commands";
 import { useArticleHeadings } from "../../lib/headings";
 
 /* =======================================================================
@@ -91,7 +91,7 @@ export function DocsLayout({
             <nav className="docs-side-links">
               <a className="docs-side-link" href="/commands">
                 Command index
-                <em>{DISCORD_COMMANDS.length + TERMINAL_COMMANDS.length}</em>
+                <em>{DISCORD_COMMANDS.length}</em>
               </a>
               <a className="docs-side-link" href="/premium">
                 Premium
@@ -225,9 +225,6 @@ export function DocsPage() {
         </>,
         <>
           <b>{DISCORD_COMMANDS.length}</b> discord commands
-        </>,
-        <>
-          <b>{TERMINAL_COMMANDS.length}</b> terminal commands
         </>,
         <>
           <b>{CATEGORIES.length}</b> categories

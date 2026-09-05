@@ -2,7 +2,7 @@ import { DocsLayout } from "./DocsPage";
 import { ArrowLink, Callout, Pill } from "../../components/ui/primitives";
 import { Icon } from "../../components/ui/Icon";
 import { CodeBlock, DefList, DocCommandList } from "../../components/docs/blocks";
-import { CATEGORIES, DISCORD_COMMANDS, TERMINAL_COMMANDS, commandsByCategory } from "../../data/commands";
+import { CATEGORIES, DISCORD_COMMANDS, commandsByCategory } from "../../data/commands";
 import { DISCORD_URL } from "../../lib/site";
 
 /**
@@ -25,9 +25,6 @@ export function CommandsReferencePage() {
         <>guide, not a list</>,
         <>
           <b>{DISCORD_COMMANDS.length}</b> discord commands indexed
-        </>,
-        <>
-          <b>{TERMINAL_COMMANDS.length}</b> terminal commands
         </>,
       ]}
       prev={{ href: "/docs/moderation", label: "previous", title: "Moderation" }}
@@ -142,7 +139,7 @@ export function CommandsReferencePage() {
           { term: "member / user", description: "A mention (@someone) or a user id. Used by moderation, roles, games and userinfo." },
           { term: "channel", description: "A channel mention (#name) or id. Used by call-config, lock, giveaways and quote mirroring." },
           { term: "role", description: "A role mention or name, for the /role group." },
-          { term: "server id", description: "A snowflake. Used to call a specific server, and by every terminal music command." },
+          { term: "server id", description: "A snowflake. Used when a command has to target one specific server." },
           { term: "number", description: "Minutes for a timeout, a queue position for /remove, a count for /audit, winners for a giveaway, times for /loop." },
           { term: "time", description: "A timestamp like 1:23 or a plain number of seconds for /seek, seconds for a giveaway duration." },
           { term: "colour", description: "A hex value (#ff0000) or a named colour (red, blue) when creating a role." },
@@ -279,28 +276,6 @@ export function CommandsReferencePage() {
         </li>
       </ul>
 
-      <h2>Terminal commands are a different surface</h2>
-      <p>
-        Mocha also has a terminal music loop, and its commands are <strong>not Discord commands</strong>: you type them
-        into the terminal, they always take a Discord server id, and they cover joining a voice channel, playing,
-        pausing, resuming, skipping, seeking, listing the queue, stopping, leaving and exiting the loop.
-      </p>
-
-      <CodeBlock
-        title="terminal, not discord"
-        lines={[
-          { prompt: "mocha$", text: <>help</>, raw: "help" },
-          { prompt: "mocha$", text: <>join &lt;server_id&gt; &lt;channel_id&gt;</>, raw: "join <server_id> <channel_id>" },
-          { prompt: "mocha$", text: <>play &lt;server_id&gt; &lt;song&gt;</>, raw: "play <server_id> <song>" },
-          { prompt: "mocha$", text: <>exit</>, raw: "exit" },
-        ]}
-      />
-
-      <p>
-        They are kept in their own category in the index so they never get confused with what you would type into a
-        channel.
-      </p>
-
       <h2>Getting help</h2>
       <p>Three places, in order of usefulness:</p>
       <ol>
@@ -327,8 +302,8 @@ export function CommandsReferencePage() {
       <h2>The complete command list</h2>
       <p>
         This guide teaches the system; the index lists everything it can do. Pick a category to open the index
-        pre-filtered — {DISCORD_COMMANDS.length} Discord commands and {TERMINAL_COMMANDS.length} terminal commands
-        across {CATEGORIES.length} categories, each row expandable for arguments and examples.
+        pre-filtered — {DISCORD_COMMANDS.length} Discord commands across {CATEGORIES.length} categories, each row
+        expandable for arguments and examples.
       </p>
 
       <div className="cmd-cat-grid">

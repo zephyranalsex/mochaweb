@@ -5,7 +5,6 @@ import {
   CATEGORY_BY_ID,
   COMMANDS,
   DISCORD_COMMANDS,
-  TERMINAL_COMMANDS,
   commandNames,
   commandSearchText,
   primarySignature,
@@ -88,7 +87,6 @@ function CommandRow({
   query: string;
   registerRef: (id: string, el: HTMLElement | null) => void;
 }) {
-  const category = CATEGORY_BY_ID[command.category];
   const info = availability(command);
   const panelId = `cmd-panel-${command.id}`;
 
@@ -118,13 +116,7 @@ function CommandRow({
         </span>
 
         <span className="cmd-item-tags">
-          {category?.surface === "terminal" ? (
-            <Pill tone="red" className="pill--keep">
-              terminal
-            </Pill>
-          ) : (
-            <Pill tone={info.tone}>{info.label}</Pill>
-          )}
+          <Pill tone={info.tone}>{info.label}</Pill>
           {command.scope === "server" ? (
             <Pill tone="red" className="pill--keep">
               <Icon name="shield" />
@@ -256,12 +248,7 @@ export function CommandsPage() {
   const filtered = useMemo(() => {
     const needle = query.trim().toLowerCase();
     return COMMANDS.filter((command) => {
-      const cat = CATEGORY_BY_ID[command.category];
       if (category !== "all" && command.category !== category) return false;
-      if (cat.surface === "terminal" && scope !== "all") {
-        /* terminal commands are their own surface — scope facets apply to Discord */
-        if (scope === "server") return false;
-      }
       if (scope === "server" && command.scope !== "server") return false;
       if (scope === "everyone" && command.scope !== "everyone") return false;
       if (!matchesForm(command, form)) return false;
@@ -309,9 +296,6 @@ export function CommandsPage() {
   const meta: ReactNode[] = [
     <>
       <b>{DISCORD_COMMANDS.length}</b> discord commands
-    </>,
-    <>
-      <b>{TERMINAL_COMMANDS.length}</b> terminal commands
     </>,
     <>
       <b>{CATEGORIES.length}</b> categories
@@ -467,8 +451,8 @@ export function CommandsPage() {
             </span>
             <h3>No command matches “{query}”.</h3>
             <p>
-              Try a shorter word, a category, or one of the commands people look up most. Terminal commands live in
-              their own category — they are not Discord commands.
+              Try a shorter word, a category, or one of the commands people look up most. Search matches command
+              names, aliases and descriptions.
             </p>
             <div className="empty-state-actions">
               {SUGGESTIONS.map((suggestion) => (
@@ -509,13 +493,6 @@ export function CommandsPage() {
                     />
                   ))}
                 </div>
-
-                {group.category.id === "terminal" ? (
-                  <p className="cmd-note" style={{ marginTop: 16 }}>
-                    These are Mocha terminal commands, not Discord commands — they are typed into the terminal music
-                    loop and always take a server id.
-                  </p>
-                ) : null}
               </section>
             ))}
           </div>

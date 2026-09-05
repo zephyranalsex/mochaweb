@@ -96,16 +96,16 @@ const QUICK_ANSWERS: { icon: IconName; q: string; a: ReactNode; href?: string; c
     cta: "set-prefix",
   },
   {
-    icon: "terminal",
-    q: "Terminal commands do not work in a channel",
+    icon: "quote",
+    q: "The quote card came out empty",
     a: (
       <>
-        They are a different surface: the terminal music loop takes a server id and is not typed into Discord. They
-        live in their own category in the index.
+        <code>mocha quote</code> builds the card from the message you are <strong>replying to</strong>. Reply first,
+        then run it — it is a text command, so there is no slash form.
       </>
     ),
-    href: "/commands?c=terminal",
-    cta: "terminal commands",
+    href: "/commands?cmd=quote",
+    cta: "quote",
   },
   {
     icon: "gamepad",

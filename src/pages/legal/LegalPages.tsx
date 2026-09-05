@@ -1,7 +1,7 @@
 import { LegalLayout, LegalSummary, Pending } from "./LegalLayout";
 import { Callout } from "../../components/ui/primitives";
 import { PREMIUM_CATEGORIES, formatPrice } from "../../data/premium";
-import { DISCORD_COMMANDS, TERMINAL_COMMANDS } from "../../data/commands";
+import { DISCORD_COMMANDS } from "../../data/commands";
 import { DISCORD_URL } from "../../lib/site";
 
 /**
@@ -44,8 +44,8 @@ export function TermsPage() {
         items={[
           <>Using Mocha means following Discord's rules, the law, and your server's rules.</>,
           <>
-            Every command is free — {DISCORD_COMMANDS.length} Discord commands and {TERMINAL_COMMANDS.length} terminal
-            commands. Premium is optional and adds polish, capacity and priority.
+            Every command is free — all {DISCORD_COMMANDS.length} of them. Premium is optional and adds polish,
+            capacity and priority.
           </>,
           <>Moderation commands are bound by Discord's own permission system.</>,
           <>Features can change or be removed as Mocha evolves; availability is not guaranteed.</>,

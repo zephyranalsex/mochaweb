@@ -1,15 +1,19 @@
 import type { IconName } from "../components/ui/Icon";
 
 /**
- * The single source of truth for every Mocha command.
+ * The single source of truth for every Mocha command the public site lists.
  *
  * Transcribed from the official Mocha command reference (the same list the bot
  * ships with) — nothing here is invented. Where the reference gives a command
  * both a slash form (`/call`) and a prefix form (`mocha call`), both are kept
  * on one entry so the directory never shows the same command twice.
+ *
+ * Mocha's operator-only terminal commands (the console music loop, driven from
+ * the machine the bot runs on) are deliberately NOT part of this dataset: a
+ * server member cannot use them, and everything in here ships inside the built
+ * site.
  */
 
-export type CommandSurface = "discord" | "terminal";
 export type CommandScope = "everyone" | "server";
 
 export type CommandArg = {
@@ -33,7 +37,6 @@ export type CommandCategory = {
   short: string;
   tagline: string;
   icon: IconName;
-  surface: CommandSurface;
 };
 
 export type Command = {
@@ -63,7 +66,6 @@ export const CATEGORIES: CommandCategory[] = [
     short: "Core",
     tagline: "calls, prefixes, and the plumbing",
     icon: "signal",
-    surface: "discord",
   },
   {
     id: "games",
@@ -71,7 +73,6 @@ export const CATEGORIES: CommandCategory[] = [
     short: "Games",
     tagline: "start something in chat, keep the score",
     icon: "gamepad",
-    surface: "discord",
   },
   {
     id: "music",
@@ -79,7 +80,6 @@ export const CATEGORIES: CommandCategory[] = [
     short: "Music",
     tagline: "queue it up without leaving the channel",
     icon: "music",
-    surface: "discord",
   },
   {
     id: "utility",
@@ -87,7 +87,6 @@ export const CATEGORIES: CommandCategory[] = [
     short: "Utility",
     tagline: "profiles and avatars, no clicking required",
     icon: "user",
-    surface: "discord",
   },
   {
     id: "moderation",
@@ -95,7 +94,6 @@ export const CATEGORIES: CommandCategory[] = [
     short: "Moderation",
     tagline: "keep the place tidy",
     icon: "shield",
-    surface: "discord",
   },
   {
     id: "giveaways",
@@ -103,7 +101,6 @@ export const CATEGORIES: CommandCategory[] = [
     short: "Giveaways",
     tagline: "hype with a deadline",
     icon: "gift",
-    surface: "discord",
   },
   {
     id: "quotes",
@@ -111,7 +108,6 @@ export const CATEGORIES: CommandCategory[] = [
     short: "Quotes",
     tagline: "keep the good lines",
     icon: "quote",
-    surface: "discord",
   },
   {
     id: "valorant",
@@ -119,15 +115,6 @@ export const CATEGORIES: CommandCategory[] = [
     short: "Valorant",
     tagline: "name#tag in, account info out",
     icon: "target",
-    surface: "discord",
-  },
-  {
-    id: "terminal",
-    label: "Terminal",
-    short: "Terminal",
-    tagline: "music driven from the console, not from Discord",
-    icon: "terminal",
-    surface: "terminal",
   },
 ];
 
@@ -671,114 +658,6 @@ export const COMMANDS: Command[] = [
     example: "/valinfo Shroud#NA1",
     scope: "everyone",
   },
-
-  /* ---------------------------------------------------------- terminal -- */
-  {
-    id: "term-help",
-    name: "help",
-    category: "terminal",
-    description: "Show terminal help.",
-    prefix: "help",
-    scope: "everyone",
-  },
-  {
-    id: "term-join",
-    name: "join",
-    category: "terminal",
-    description: "Join a server's voice channel.",
-    prefix: "join <server_id> <channel_id>",
-    args: [
-      { name: "server_id", required: true, description: "Discord server ID." },
-      { name: "channel_id", required: true, description: "Voice channel ID." },
-    ],
-    scope: "everyone",
-  },
-  {
-    id: "term-play",
-    name: "play",
-    category: "terminal",
-    description: "Play a song.",
-    prefix: "play <server_id> <song>",
-    args: [
-      { name: "server_id", required: true, description: "Discord server ID." },
-      { name: "song", required: true, description: "Song to play." },
-    ],
-    scope: "everyone",
-  },
-  {
-    id: "term-pause",
-    name: "pause",
-    category: "terminal",
-    description: "Pause music.",
-    prefix: "pause <server_id>",
-    args: [{ name: "server_id", required: true, description: "Discord server ID." }],
-    scope: "everyone",
-  },
-  {
-    id: "term-resume",
-    name: "resume",
-    category: "terminal",
-    description: "Resume music.",
-    prefix: "resume <server_id>",
-    args: [{ name: "server_id", required: true, description: "Discord server ID." }],
-    scope: "everyone",
-  },
-  {
-    id: "term-skip",
-    name: "skip",
-    category: "terminal",
-    description: "Skip the current song.",
-    prefix: "skip <server_id>",
-    args: [{ name: "server_id", required: true, description: "Discord server ID." }],
-    scope: "everyone",
-  },
-  {
-    id: "term-seek",
-    name: "seek",
-    category: "terminal",
-    description: "Seek within the current song.",
-    prefix: "seek <server_id> <timestamp>",
-    args: [
-      { name: "server_id", required: true, description: "Discord server ID." },
-      { name: "timestamp", required: true, description: "Position to seek to." },
-    ],
-    scope: "everyone",
-  },
-  {
-    id: "term-queue",
-    name: "queue",
-    category: "terminal",
-    description: "Show the queue.",
-    prefix: "queue <server_id>",
-    args: [{ name: "server_id", required: true, description: "Discord server ID." }],
-    scope: "everyone",
-  },
-  {
-    id: "term-stop",
-    name: "stop",
-    category: "terminal",
-    description: "Stop music.",
-    prefix: "stop <server_id>",
-    args: [{ name: "server_id", required: true, description: "Discord server ID." }],
-    scope: "everyone",
-  },
-  {
-    id: "term-leave",
-    name: "leave",
-    category: "terminal",
-    description: "Leave the voice channel.",
-    prefix: "leave <server_id>",
-    args: [{ name: "server_id", required: true, description: "Discord server ID." }],
-    scope: "everyone",
-  },
-  {
-    id: "term-exit",
-    name: "exit",
-    category: "terminal",
-    description: "Exit the terminal command loop.",
-    prefix: "exit",
-    scope: "everyone",
-  },
 ];
 
 /* ------------------------------------------------------------ helpers -- */
@@ -791,10 +670,8 @@ export const CATEGORY_BY_ID: Record<string, CommandCategory> = CATEGORIES.reduce
   {} as Record<string, CommandCategory>
 );
 
-export const DISCORD_COMMANDS = COMMANDS.filter((command) => CATEGORY_BY_ID[command.category].surface === "discord");
-export const TERMINAL_COMMANDS = COMMANDS.filter((command) => CATEGORY_BY_ID[command.category].surface === "terminal");
-
-export const DISCORD_CATEGORIES = CATEGORIES.filter((category) => category.surface === "discord");
+/** Every command in the public directory is a Discord command. */
+export const DISCORD_COMMANDS = COMMANDS;
 
 /** Every name a command answers to, used for search matching. */
 export function commandNames(command: Command): string[] {
