@@ -251,7 +251,7 @@ export function Premium() {
               Early access to new commands
             </div>
           </div>
-          <a className="mini-sticker-cta" href="https://discord.com/invite/mocha" target="_blank" rel="noreferrer">
+          <a className="mini-sticker-cta" href="/premium">
             <span className="shard" />
             <span className="plate">Get Premium &gt;</span>
           </a>

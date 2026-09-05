@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState, type CSSProperties, type FormEvent } from "react";
 import { mochaPaperclip } from "../assets/mochaAssets";
 import { useCountOnView, useMagnetic } from "../lib/hooks";
+import { currentPath } from "../lib/site";
 
 const rd = (s: string) => ({ "--rd": s }) as CSSProperties;
 
@@ -464,6 +465,11 @@ export function Cta() {
 /* ---------------- footer ---------------- */
 
 export function Footer() {
+  /* "About us" is a section on the homepage. On the homepage the anchor stays
+     exactly as it was; anywhere else it has to point home, or the link lands on
+     an id that does not exist on that page. */
+  const aboutHref = currentPath() === "/" ? "#about" : "/#about";
+
   return (
     <footer className="mocha-footer" id="footer">
       <div className="footer-word" aria-hidden="true">
@@ -493,7 +499,7 @@ export function Footer() {
             Premium
           </a>
 
-          <a className="footer-link" href="#about">
+          <a className="footer-link" href={aboutHref}>
             About us
           </a>
         </div>
