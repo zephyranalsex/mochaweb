@@ -4072,41 +4072,16 @@
   opacity: 0.7;
 }
 
-/* to be finalised ----------------------------------------------------- */
+/* last updated line ---------------------------------------------------- */
 
-.legal-pending {
-  position: relative;
-  margin: 28px 0;
-  padding: 20px 22px 22px;
-  border: 1px dashed rgba(227, 192, 136, 0.38);
-  border-radius: var(--sp-radius);
-  background: repeating-linear-gradient(
-    135deg,
-    rgba(227, 192, 136, 0.05) 0 12px,
-    rgba(227, 192, 136, 0.012) 12px 24px
-  );
-}
-
-.legal-pending-flag {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: 12px;
-  padding: 4px 11px;
-  border: 1px solid rgba(227, 192, 136, 0.36);
-  border-radius: 999px;
-  background: rgba(227, 192, 136, 0.1);
+.legal-updated {
+  margin: 0 0 26px;
   font-family: var(--font-mono);
-  font-size: 0.55rem;
+  font-size: 0.58rem;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: var(--sp-accent, #e3c088);
+  color: var(--mid-2);
 }
-
-.legal-pending-flag svg { width: 12px; height: 12px; }
-
-.legal-pending-body p:first-child { margin-top: 0; }
-.legal-pending-body > :last-child { margin-bottom: 0; }
 
 /* price table --------------------------------------------------------- */
 

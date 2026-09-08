@@ -9,9 +9,9 @@ import { DISCORD_URL, currentPath } from "../../lib/site";
  * Shared shell for /terms, /privacy and /refunds.
  *
  * Legal pages are mostly text, so the polish here is structural: a sticky
- * contents column with scroll tracking, numbered sections, a consistent
- * reading width, and an honest, deliberately styled block for anything that
- * has not been written yet — no invented policy.
+ * contents column with scroll tracking (numbered h2 sections, indented h3
+ * sub-sections), a consistent reading width, and a contact panel closing
+ * every document.
  */
 
 const LEGAL_PAGES = [
@@ -19,18 +19,6 @@ const LEGAL_PAGES = [
   { href: "/privacy", label: "Privacy Policy", index: "02" },
   { href: "/refunds", label: "Refunds", index: "03" },
 ];
-
-export function Pending({ children, label = "to be finalised" }: { children: ReactNode; label?: string }) {
-  return (
-    <div className="legal-pending">
-      <span className="legal-pending-flag">
-        <Icon name="clock" />
-        {label}
-      </span>
-      <div className="legal-pending-body">{children}</div>
-    </div>
-  );
-}
 
 export function LegalSummary({ title = "At a glance", items }: { title?: string; items: ReactNode[] }) {
   return (
@@ -109,10 +97,14 @@ export function LegalLayout({
                 {headings.map((heading) => (
                   <a
                     key={heading.id}
-                    className={`docs-toc-link${activeId === heading.id ? " is-active" : ""}`}
+                    className={`docs-toc-link${heading.level === 3 ? " docs-toc-link--h3" : ""}${
+                      activeId === heading.id ? " is-active" : ""
+                    }`}
                     href={`#${heading.id}`}
                   >
-                    <span className="docs-toc-num">{String(heading.num).padStart(2, "0")}</span>
+                    {heading.level === 2 ? (
+                      <span className="docs-toc-num">{String(heading.num).padStart(2, "0")}</span>
+                    ) : null}
                     {heading.text}
                   </a>
                 ))}
